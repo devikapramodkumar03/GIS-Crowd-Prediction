@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Crowd Density Predictor</title>
+  <style>
+    /* Reset and base */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #000000; /* Black background */
+      color: #e0e0e0; /* Light gray text */
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      background-color: #121212; /* Dark gray container */
+      padding: 40px 50px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+      width: 400px;
+      max-width: 90%;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+      font-weight: 700;
+      font-size: 2.5rem;
+      color: #ffffff;
+      letter-spacing: 1.2px;
+      text-align: center;
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #bbbbbb;
+      font-size: 1rem;
+    }
+
+    input {
+      padding: 12px 15px;
+      margin-bottom: 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: #1e1e1e;
+      color: #f0f0f0;
+      font-size: 1rem;
+      box-shadow: inset 0 0 5px #333;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      width: 100%;
+    }
+
+    input:focus {
+      outline: none;
+      background-color: #2a2a2a;
+      box-shadow: 0 0 8px #007bff;
+      color: #ffffff;
+    }
+
+    button {
+      padding: 14px 0;
+      background: linear-gradient(90deg, #007bff, #0056b3);
+      border: none;
+      border-radius: 50px;
+      color: white;
+      font-size: 1.25rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 6px 15px rgba(0, 123, 255, 0.6);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: linear-gradient(90deg, #0056b3, #003d80);
+      box-shadow: 0 8px 20px rgba(0, 86, 179, 0.8);
+    }
+
+    #result {
+      margin-top: 25px;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #00ff99; /* bright green for success */
+      min-height: 1.5em;
+      word-wrap: break-word;
+      text-align: center;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .container {
+        width: 90%;
+        padding: 30px 20px;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+      button {
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+  <script>
+    async function getPrediction() {
+      const lat = document.getElementById("latitude").value.trim();
+      const lon = document.getElementById("longitude").value.trim();
+      const temp = document.getElementById("temperature").value.trim();
+
+      if (!lat || !lon || !temp) {
+        document.getElementById("result").innerText = "Please fill in all fields.";
+        document.getElementById("result").style.color = "#ff4c4c"; // red
+        return;
+      }
+
+      document.getElementById("result").innerText = "Predicting...";
+      document.getElementById("result").style.color = "#00ff99"; // green
+
+      try {
+        const response = await fetch("/predict", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ latitude: lat, longitude: lon, temperature: temp })
+        });
+
+        const result = await response.json();
+
+        if (result.predicted_crowd !== undefined) {
+          document.getElementById("result").innerText =
+            "Predicted Crowd Density: " + result.predicted_crowd + " people/m²";
+          document.getElementById("result").style.color = "#00ff99"; // green
+        } else if (result.error) {
+          document.getElementById("result").innerText = "Error: " + result.error;
+          document.getElementById("result").style.color = "#ff4c4c"; // red
+        } else {
+          document.getElementById("result").innerText = "Unexpected response.";
+          document.getElementById("result").style.color = "#ff4c4c";
+        }
+      } catch (error) {
+        document.getElementById("result").innerText = "Network error. Please try again.";
+        document.getElementById("result").style.color = "#ff4c4c";
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>Crowd Density Predictor</h1>
+
+    <label for="latitude">Latitude:</label>
+    <input type="text" id="latitude" placeholder="Enter Latitude" autocomplete="off" />
+
+    <label for="longitude">Longitude:</label>
+    <input type="text" id="longitude" placeholder="Enter Longitude" autocomplete="off" />
+
+    <label for="temperature">Temperature (°C):</label>
+    <input type="text" id="temperature" placeholder="Enter Temperature" autocomplete="off" />
+
+    <button onclick="getPrediction()">Predict</button>
+
+    <div id="result"></div>
+  </div>
+</body>
+</html>

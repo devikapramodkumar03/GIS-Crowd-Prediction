@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}About the Project - GIS Crowd Prediction{% endblock %}
+
+{% block head %}
+<style>
+  /* Background image */
+  body {
+    background-image: url("/static/about\ bg.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+
+  /* Semi-transparent overlay for readability */
+  .overlay {
+    background-color: rgba(0, 0, 0, 0.7); /* Black overlay with transparency */
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.5);
+    max-width: 800px;
+    margin: auto;
+    color: #e0e0e0; /* Light text */
+  }
+
+  h1, h2 {
+    color: #007bff; /* Blue headings */
+    margin-bottom: 20px;
+  }
+
+  p {
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  ul {
+    margin-bottom: 20px;
+    padding-left: 20px;
+  }
+
+  ul li {
+    margin-bottom: 10px;
+  }
+
+  .about-image {
+    width: calc(100% - 20px);
+    max-width: 400px;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.7);
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="overlay">
+  <h1>About GIS Crowd Prediction</h1>
+
+  <h2>What It Does</h2>
+  <p>
+    This project uses satellite imagery and environmental data such as NDVI (Normalized Difference Vegetation Index) 
+    and temperature, combined with machine learning models, to estimate crowd density at specific locations.
+  </p>
+  <img src="/static/sat.jpg" alt="Satellite Image" class="about-image">
+
+  <h2>Why Monitor Overcrowding?</h2>
+  <ul>
+    <li>Overcrowding can lead to safety hazards including stampedes and accidents.</li>
+    <li>It strains public infrastructure and emergency services.</li>
+    <li>High crowd density can accelerate the spread of infectious diseases.</li>
+    <li>Monitoring helps city planners and event organizers manage crowds effectively.</li>
+  </ul>
+
+  <img src="/static/crowd.jpg" alt="Crowd Image" class="about-image">
+
+  <h2>Impact of This Project</h2>
+  <p>
+    By providing accurate crowd density predictions, this tool supports:
+  </p>
+  <ul>
+    <li>Improved public safety and emergency response.</li>
+    <li>Better urban planning and infrastructure development.</li>
+    <li>Enhanced event management and crowd control.</li>
+  </ul>
+
+  <img src="/static/urban.jpg" alt="Urban Planning" class="about-image">
+</div>
+{% endblock %}

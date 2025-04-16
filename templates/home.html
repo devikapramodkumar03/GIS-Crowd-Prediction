@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Home - GIS Crowd Prediction{% endblock %}
+
+{% block head %}
+<style>
+  /* Background image */
+  body {
+    background-image: url("/static/hombg.jpg");
+    background-size: cover;       /* Cover entire viewport */
+    background-position: center;  /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat */
+    background-attachment: fixed; /* Fixed during scroll */
+  }
+
+  /* Semi-transparent overlay for readability */
+  .overlay {
+    background-color: rgba(0, 0, 0, 0.7); /* Black overlay with transparency */
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.5);
+    max-width: 800px;
+    margin: auto;
+    color: #e0e0e0; /* Light text */
+    text-align: center;
+  }
+
+  h1 {
+    color: #007bff; /* Blue heading */
+    margin-bottom: 20px;
+  }
+
+  p {
+    line-height: 1.6;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+  }
+
+  a.button {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+  }
+
+  a.button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="overlay">
+  <h1>Welcome to GIS Crowd Prediction</h1>
+  
+  <p>
+    This project leverages satellite data and machine learning to predict crowd density in urban areas.
+    Understanding crowd density helps improve public safety, urban planning, and resource management.
+  </p>
+  
+  <p>
+    Use the Predict page to enter location and weather data and get real-time crowd density estimates.
+  </p>
+
+  
+</div>
+{% endblock %}
