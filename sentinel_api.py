@@ -4,8 +4,8 @@ from sentinelhub import SHConfig, SentinelHubRequest, DataCollection, MimeType, 
 
 # Configure Sentinel Hub credentials
 config = SHConfig()
-config.sh_client_id = "e4642559-5bd2-4767-acc2-9ab3102cb631"  # Replace with your client ID
-config.sh_client_secret = "AYBP7gYzLb2eTNdNdPsD7j5JMPmXdSXG"  # Replace with your client secret
+config.sh_client_id = "XXXXXXXXXX"
+config.sh_client_secret = "XXXXXXXXXX"
 
 if not config.sh_client_id or not config.sh_client_secret:
     raise ValueError("Sentinel Hub credentials are not set. Please set SH client ID and secret.")
@@ -76,3 +76,4 @@ def get_satellite_data(lat, lon):
                 time.sleep(2 ** attempt)  # Exponential backoff
             else:
                 raise e
+
